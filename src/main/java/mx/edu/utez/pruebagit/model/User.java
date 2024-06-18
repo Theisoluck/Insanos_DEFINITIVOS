@@ -8,6 +8,7 @@ public class User implements Serializable {
     private String email;
     private String pass;
     private String cody;
+    private boolean estado;
 
     //Siempre deben contener los metodos de
     //Constructores (al menos el vacio)
