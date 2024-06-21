@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 //Me permite hacer funciones CRUD
 public class UserDao {
@@ -57,6 +58,26 @@ public class UserDao {
             e.printStackTrace();
         }
         return flag;
+    }
+
+    public ArrayList<User> getAll(){
+        ArrayList<User> users = new ArrayList<>();
+        String query = "select * from users";
+        try{
+            Connection con = DatabaseConnectionManager.getConnection();
+            PreparedStatement ps = con.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){ //Iteramos cada fila resultado de la query
+                User u = new User();
+                u.setUser_name(rs.getString("user_name"));
+                u.setPass(rs.getString("pass"));
+                u.setEmail(rs.getString("email"));
+                users.add(u);
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return users;
     }
 
 
