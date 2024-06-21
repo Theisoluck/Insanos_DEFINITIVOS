@@ -80,5 +80,46 @@ public class UserDao {
         return users;
     }
 
+    //Si voy a editar debo tener 2 parametros 1 el ID del usuario y 2 el Ususrio como tal
+    public boolean update(String email, User u){
+        boolean flag = false;
+        String query = "update users set user_name = ?, email = ?, pass = sha2(?,256) where email = ?";
+        try{
+            Connection con = DatabaseConnectionManager.getConnection();
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1,u.getUser_name());
+            ps.setString(2,u.getEmail());
+            ps.setString(3,u.getPass());
+            ps.setString(4, email);
+            if(ps.executeUpdate()>0){
+                flag = true;
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return flag;
+    }
+
+
+    public User getOne(String email){
+        User u = new User();
+        String query = "select * from users where email = ?";
+        try{
+            Connection con = DatabaseConnectionManager.getConnection();
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1 , email);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                u.setUser_name(rs.getString("user_name"));
+                u.setPass(rs.getString("pass"));
+                u.setEmail(rs.getString("email"));
+                u.setCody(rs.getString("cody"));
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return u;
+    }
+
 
 }
