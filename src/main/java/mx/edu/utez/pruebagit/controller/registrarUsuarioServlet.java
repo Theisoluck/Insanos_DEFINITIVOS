@@ -12,7 +12,7 @@ import mx.edu.utez.pruebagit.model.User;
 
 import java.io.IOException;
 
-@WebServlet(name = "UserServlet", value = "/sign-in")
+@WebServlet(name = "UserServlet", value = "/sign_in")
 public class registrarUsuarioServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String user_name = req.getParameter("user_name");
@@ -31,10 +31,12 @@ public class registrarUsuarioServlet extends HttpServlet {
         UserDao dao = new UserDao();
         if(dao.insert(u)){
             //Si se inserto
+            resp.sendRedirect("index.jsp");
         }else{
             //que nel
+            req.getSession().setAttribute("mensaje","No se pudo registrar el usuario en la BD");
+            resp.sendRedirect("registroUsuario.jsp");
         }
-        resp.sendRedirect("verUsuarios.jsp");
     }
 
     public void destroy() {
