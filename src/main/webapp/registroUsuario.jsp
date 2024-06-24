@@ -22,6 +22,7 @@
     <label>Ingrese su correo: </label>
     <input type="email" name="email" value="<%=u.getEmail()%>" >
     <br>
+    <input type="hidden" value="<%=u.getEmail()%>" name="operacion" />
     <input type="submit" value="Registrarse">
 </form>
 </body>

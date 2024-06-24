@@ -16,19 +16,7 @@ public class HelloServlet extends HttpServlet {
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/html");
 
-        try{
-            DatabaseConnectionManager.getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        // Hello
-        PrintWriter out = response.getWriter();
-        out.println("<html><body>");
-        out.println("<h1>" + message + "</h1>");
-        out.println("</body></html>");
     }
 
     public void destroy() {
