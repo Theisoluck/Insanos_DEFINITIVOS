@@ -29,7 +29,7 @@
                         <td><%=u.getUser_name()%></td>
                         <td><%=u.getEmail()%></td>
                         <td><%=u.getPass()%></td>
-                        <td><a href="actualizarUsuario?email=<%=u.getEmail()%>">Actualizar</a></td> <!-- funcionalidades del update -->
+                        <td><a href="actualizarUsuario?id=<%=u.getId()%>">Actualizar</a></td> <!-- funcionalidades del update -->
                         <td><a href="borrarUsuario">Borrar</a></td> <!-- funcionalidades del delete -->
                     </tr>
                <% } %>

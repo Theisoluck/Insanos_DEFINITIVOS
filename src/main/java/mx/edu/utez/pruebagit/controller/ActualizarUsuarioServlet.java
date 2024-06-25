@@ -16,10 +16,10 @@ import java.io.IOException;
 public class ActualizarUsuarioServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String email = req.getParameter("email");
+        int id = Integer.parseInt(req.getParameter("id"));
         //Para buscar la info del usuario
         UserDao dao = new UserDao();
-        User u = dao.getOne(email);
+        User u = dao.getOne(id);
         HttpSession sesion = req.getSession();
         sesion.setAttribute("usuario", u);
         //despues mandarla a un formulario para su edición

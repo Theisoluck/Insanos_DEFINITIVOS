@@ -4,6 +4,7 @@ import java.io.Serializable;
 //Bean es una estructura de datos que modela
 //un objeto de la vida real, es util en diversos escenarios
 public class User implements Serializable {
+    private int id;
     private String user_name;
     private String email;
     private String pass;
@@ -19,11 +20,13 @@ public class User implements Serializable {
 
     }
 
-    public User(String user_name, String email, String pass, String cody) {
+    public User(int id, String user_name, String email, String pass, String cody, boolean estado) {
+        this.id = id;
         this.user_name = user_name;
         this.email = email;
         this.pass = pass;
         this.cody = cody;
+        this.estado = estado;
     }
 
     public String getUser_name() {
@@ -56,5 +59,21 @@ public class User implements Serializable {
 
     public void setCody(String cody) {
         this.cody = cody;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 }

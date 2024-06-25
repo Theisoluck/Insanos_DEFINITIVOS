@@ -33,7 +33,7 @@ public class registrarUsuarioServlet extends HttpServlet {
 
         if(operacion != "") { //probar si isacc tenia razon
             //Que estoy haciendo una modificación / Update
-            if(dao.update(email,u)){
+            if(dao.update(Integer.parseInt(operacion),u)){
                 resp.sendRedirect("gestionUsuario.jsp");
             }else{
                 req.getSession().setAttribute("mensaje","No se pudo actualizar el usuario en la BD");

@@ -31,10 +31,12 @@ public class UserDao {
             //Obtener la información del ResultSet
             if(rs.next()){
                 //Que el usuario si exite en la base de datos
+                u.setId(rs.getInt("id"));
                 u.setUser_name(rs.getString("user_name"));
                 u.setPass(rs.getString("pass"));
                 u.setEmail(rs.getString("email"));
                 u.setCody(rs.getString("cody"));
+                u.setEstado(rs.getBoolean("status"));
             }
         } catch (SQLException e){
             e.printStackTrace();
@@ -44,7 +46,7 @@ public class UserDao {
 
     public boolean insert(User user){
         boolean flag = false;
-        String query = "insert into users(user_name, pass, email) values(?,?,?);";
+        String query = "insert into users(user_name, pass, email) values(?,sha2(?,256),?);";
         try {
             Connection con = DatabaseConnectionManager.getConnection();
             PreparedStatement ps = con.prepareStatement(query);
@@ -69,9 +71,12 @@ public class UserDao {
             ResultSet rs = ps.executeQuery();
             while(rs.next()){ //Iteramos cada fila resultado de la query
                 User u = new User();
+                u.setId(rs.getInt("id"));
                 u.setUser_name(rs.getString("user_name"));
                 u.setPass(rs.getString("pass"));
                 u.setEmail(rs.getString("email"));
+                u.setCody(rs.getString("cody"));
+                u.setEstado(rs.getBoolean("status"));
                 users.add(u);
             }
         }catch(SQLException e){
@@ -81,16 +86,16 @@ public class UserDao {
     }
 
     //Si voy a editar debo tener 2 parametros 1 el ID del usuario y 2 el Ususrio como tal
-    public boolean update(String email, User u){
+    public boolean update(int id, User u){
         boolean flag = false;
-        String query = "update users set user_name = ?, email = ?, pass = sha2(?,256) where email = ?";
+        String query = "update users set user_name = ?, email = ?, pass = sha2(?,256) where id = ?";
         try{
             Connection con = DatabaseConnectionManager.getConnection();
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1,u.getUser_name());
             ps.setString(2,u.getEmail());
             ps.setString(3,u.getPass());
-            ps.setString(4, email);
+            ps.setInt(4, id);
             if(ps.executeUpdate()>0){
                 flag = true;
             }
@@ -101,19 +106,21 @@ public class UserDao {
     }
 
 
-    public User getOne(String email){
+    public User getOne(int id){
         User u = new User();
-        String query = "select * from users where email = ?";
+        String query = "select * from users where id = ?";
         try{
             Connection con = DatabaseConnectionManager.getConnection();
             PreparedStatement ps = con.prepareStatement(query);
-            ps.setString(1 , email);
+            ps.setInt(1 , id);
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
+                u.setId(rs.getInt("id"));
                 u.setUser_name(rs.getString("user_name"));
                 u.setPass(rs.getString("pass"));
                 u.setEmail(rs.getString("email"));
                 u.setCody(rs.getString("cody"));
+                u.setEstado(rs.getBoolean("status"));
             }
         } catch (SQLException e){
             e.printStackTrace();
